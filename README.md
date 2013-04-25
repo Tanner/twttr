@@ -16,15 +16,18 @@ ryan: Making my first post on Twitter.
 ```
 
 ## Status
-Regular status updates perform either addition or multiplication depending on the number of words in the tweets.
+Regular status updates perform addition given the two fragments in the status update. The result is added to the user's value and stored in the user.
 
-If the number of words is odd, then addition is performed. Otherwise, multiplication is performed.
+A fragment is defined as words before puncuation marks, e.g. `.,;:-`.
 
-The other term involved in the calculation is number of letters in the first word. Negative numbers are denoted by the status ending in a bang "!".
+The number added is determined by the number of words in either the two fragments. The first fragment is indiciated as positive numbers and the second fragment is negative numbers.
 
 ```
-tannerld: My cat should be clean.
-ryan: Not cool!
+tannerld: This is my cat. I love it.
+ryan: I hate my job. Someone please find me a new.
+
+tanner = 1
+ryan = -2
 ```
 
 ### Input
