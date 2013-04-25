@@ -25,5 +25,12 @@ class TestInstruction(unittest.TestCase):
 
 		self.assertEqual(instruction.extract_hashtags(), [])
 
+	def test_value(self):
+		self.assertEqual(Instruction("tannerld: I love cats. Maybe.").value(), 2)
+		self.assertEqual(Instruction("tannerld: I love cats.").value(), 3)
+		self.assertEqual(Instruction("tannerld: Hmm. That darn cat.").value(), -2)
+		self.assertEqual(Instruction("tannerld: I love you. That darn cat.").value(), 0)
+		self.assertEqual(Instruction("tannerld: Is this right... No.").value(), 2)
+
 if __name__ == '__main__':
 	unittest.main()

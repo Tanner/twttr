@@ -22,3 +22,16 @@ class Instruction:
 	def extract_hashtags(self):
 		"""Extracts the hashtags (#tag) from the status."""
 		return re.findall(r"#([A-Za-z]+)", self.status)
+
+	def value(self):
+		"""Read the value of the status based on the number of words in the first two sentences."""
+		fragments = re.findall(r"([A-Za-z ]+)[\.,;:-] ?", self.status)
+
+		if len(fragments) == 1:
+			return self.__count_words(fragments[0])
+
+		return self.__count_words(fragments[0]) - self.__count_words(fragments[1])
+
+	def __count_words(self, string):
+		"""Count the number of words in a string."""
+		return len(re.findall(r"([A-Za-z\.\"-]+) ?", string))
