@@ -32,5 +32,9 @@ class TestInstruction(unittest.TestCase):
 		self.assertEqual(Instruction("tannerld: I love you. That darn cat.").value(), 0)
 		self.assertEqual(Instruction("tannerld: Is this right... No.").value(), 2)
 
+	def test_input(self):
+		self.assertTrue(Instruction("tannerld: Is this life?").is_input())
+		self.assertFalse(Instruction("tannerld: Is this life? No.").is_input())
+
 if __name__ == '__main__':
 	unittest.main()

@@ -32,6 +32,10 @@ class Instruction:
 
 		return self.__count_words(fragments[0]) - self.__count_words(fragments[1])
 
+	def is_input(self):
+		"""Detects whether the instruction is asking for input."""
+		return self.status[-1] == '?'
+
 	def __count_words(self, string):
 		"""Count the number of words in a string."""
 		return len(re.findall(r"([A-Za-z\.\"-]+) ?", string))
