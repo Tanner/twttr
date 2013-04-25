@@ -1,6 +1,37 @@
 # twttr
 An [esoteric programming language](en.wikipedia.org/wiki/Esoteric_programming_language) based on [Twitter](https://twitter.com/).
 
+# Hello World Example
+```
+john: Hating!
+bob: Heh. I wonder if this means we get a refund!
+bob: Well. We have not found the kid yet!
+bob: Nurses don't know!
+bob: Trying other rooms. Still no luck!
+sally: Found them!
+sally: They might be in the other lot.
+sally: I still cannot find my keys.
+john: Hate this!
+bob: Definitely not a cat. Rats!
+bob: Nope. Cat!
+bob: I think we might've found him inside!
+bob: We lost the kid. Atleast I think!
+sally: Is this right... No!
+tannerld: Are we sure this is the right Joe's? #lost
+tannerld: Oh bugger. I'm lost again. #lost
+clara: Ah. #lost
+clara: I love this site! First status update on twttr.
+john: Looking for cat. #lost #bored
+john: Not sure how I feel about my first post on Twitter. Too boring.
+bob: My new boy is on the home from the hospital. #lost
+bob: First post!
+sally: Someone in the B-lot needs to help me. #lost #keys
+sally: I've never heard of Twitter. Here's my first status.
+tannerld: I have never had a sandwich as good as Joe's.
+tannerld: This is my first tweet.
+```
+Adapted from [Brainfuck Hello World](http://en.wikipedia.org/wiki/Brainfuck#Hello_World.21).
+
 # Specification
 ## Variables
 Twitter users are variables. They store and hold signed integers.
