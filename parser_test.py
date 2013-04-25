@@ -16,5 +16,14 @@ class TestInstruction(unittest.TestCase):
 		self.assertEqual(instruction.author, "tannerld")
 		self.assertEqual(instruction.status, "I love cats. Maybe.")
 
+	def test_extract_hashtags(self):
+		instruction = Instruction("tannerld: I love #cats. Maybe. #kitty")
+
+		self.assertEqual(instruction.extract_hashtags(), ["cats", "kitty"])
+
+		instruction = Instruction("tannerld: I love cats.")
+
+		self.assertEqual(instruction.extract_hashtags(), [])
+
 if __name__ == '__main__':
 	unittest.main()
