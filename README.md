@@ -27,6 +27,22 @@ tannerld: My cat should be clean.
 ryan: Not cool!
 ```
 
+### Input
+Input is received from the user when a status ends in a question mark (excluding branches). The resulting ASCII value is stored in the author.
+
+The prompt is the status text.
+
+```
+tannerld: Do you like coffee?
+```
+
+### Printing
+Printing the user's value is done by ending the last sentence in the status with a exclamation point.
+
+```
+tannerld: I love coffee!
+```
+
 ## Mentions
 Mentions subtracts the value of the user mentioned from the author.
 
@@ -71,13 +87,4 @@ The below example stores the value from `ryan` into `tanner`.
 
 ```
 tanner: RT @ryan "Baking a cake"
-```
-
-## Over Heard
-Input is taken in and set to a variable via a status starting with "OH: " aka "overheard".
-
-Any text after the colon is the prompt.
-
-```
-tanner: OH: What is the name of the cat?
 ```
