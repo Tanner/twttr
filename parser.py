@@ -36,6 +36,10 @@ class Instruction:
 		"""Detects whether the instruction is asking for input."""
 		return self.status[-1] == '?'
 
+	def is_output(self):
+		"""Detects whether the instruction is a print."""
+		return self.status[-1] == '!'
+
 	def __count_words(self, string):
 		"""Count the number of words in a string."""
 		return len(re.findall(r"([A-Za-z\.\"-]+) ?", string))

@@ -36,5 +36,9 @@ class TestInstruction(unittest.TestCase):
 		self.assertTrue(Instruction("tannerld: Is this life?").is_input())
 		self.assertFalse(Instruction("tannerld: Is this life? No.").is_input())
 
+	def test_output(self):
+		self.assertTrue(Instruction("tannerld: Is this life!").is_output())
+		self.assertFalse(Instruction("tannerld: Is this life! No.").is_output())
+
 if __name__ == '__main__':
 	unittest.main()
