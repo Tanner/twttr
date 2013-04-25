@@ -27,16 +27,23 @@ tannerld: My cat should be clean.
 ryan: Not cool!
 ```
 
-Turns into:
-
-```
-tannerld = tannerld + 2
-ryan = ryan * -3
-```
-
 ## Mentions
+Mentions subtracts the value of the user mentioned from the author.
 
-## At-Replies
+```
+tanner: Having a great time with @ryan at WWDC.
+
+tanner = tanner - ryan
+```
+
+## @replies
+@replies adds the value of the user mentioned to the author.
+
+```
+tanner: @ryan I'm heading over to the food court.
+
+tanner = tanner + ryan
+```
 
 ## Hashtags
 Hashtags are used to indicate instructions related to a branch.
