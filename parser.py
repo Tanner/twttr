@@ -54,13 +54,26 @@ class Parser:
 
 	def __init__(self, file):
 		self.instructions = []
+		self.variables = {}
 
 		with open(file, 'r') as f:
 			for line in f:
 				self.instructions.append(Instruction(line))
 
+	def run(self):
+		for i in reversed(range(len(self.instructions))):
+			instruction = self.instructions[i]
+
+			if instruction.is_creation():
+				if instruction.author not in self.variables:
+					self.variables[instruction.author] = 0
+				else:
+					print "Warning: Reached variable creation tweet, but user already a variable"
+
 def main():
 	parser = Parser(sys.argv[1])
+
+	parser.run()
 
 if __name__ =='__main__':
 	main()
