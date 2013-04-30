@@ -1,6 +1,7 @@
 #! /usr/bin/env python
 
 import re
+import sys
 
 class Instruction:
 	"""Class that represents a twttr instruction."""
@@ -43,3 +44,19 @@ class Instruction:
 	def __count_words(self, string):
 		"""Count the number of words in a string."""
 		return len(re.findall(r"([A-Za-z\.\"-]+) ?", string))
+
+class Parser:
+	"""Class that parses a twttr program."""
+
+	def __init__(self, file):
+		self.instructions = []
+
+		with open(file, 'r') as f:
+			for line in f:
+				self.instructions.append(Instruction(line))
+
+def main():
+	parser = Parser(sys.argv[1])
+
+if __name__ =='__main__':
+	main()
