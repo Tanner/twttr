@@ -8,7 +8,7 @@ class Instruction:
 	"""Class that represents a twttr instruction."""
 
 	def __init__(self, instruction):
-		match = re.match(r"([a-zA-Z]+): (.*)", instruction)
+		match = re.match(r"([a-zA-Z]+): (.+)", instruction)
 
 		if match == None:
 			raise ValueError('Instruction is not valid format of "author: status"')
