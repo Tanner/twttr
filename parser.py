@@ -29,10 +29,6 @@ class Instruction:
 		"""Return the status of any hashtags."""
 		return re.sub(r"#[A-Za-z]+", "", self.status).strip()
 
-	def is_creation(self):
-		"""Detects whether the instruction is a variable declaration."""
-		return re.search(r"first [tweet|status|post]", self.status, re.IGNORECASE) != None
-
 	def value(self):
 		"""Read the value of the status based on the number of words in the first two sentences."""
 		fragments = re.findall(r"([A-Za-z '-]+)[\.,!;\?:-] ?", self.status)
@@ -69,12 +65,10 @@ class Parser:
 		for i in reversed(range(len(self.instructions))):
 			instruction = self.instructions[i]
 
-			if instruction.is_creation():
-				if instruction.author not in self.variables:
-					self.variables[instruction.author] = 0
-				else:
-					warnings.warn("Warning: Reached variable creation tweet, but user already a variable", RuntimeWarning)
-			elif instruction.is_input():
+			if instruction.author not in self.variables:
+				self.variables[instruction.author] = 0
+			
+			if instruction.is_input():
 				input = raw_input(instruction.status + " ")
 
 				if len(input) > 0:
@@ -83,6 +77,8 @@ class Parser:
 				print chr(self.variables[instruction.author])
 
 			self.variables[instruction.author] += instruction.value()
+
+			print instruction.author, "=", self.variables[instruction.author]
 
 def main():
 	parser = Parser(sys.argv[1])

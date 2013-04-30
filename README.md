@@ -39,13 +39,6 @@ Twitter users are variables. They store and hold signed integers.
 ### Creation
 Twitter users are created by making a first tweet. Initially all users have a value of zero.
 
-First tweets must contain the words `first` describing the words `tweet`, `status`, or `post`.
-
-```
-tanner: First tweet!
-ryan: Making my first post on Twitter.
-```
-
 ## Status
 Regular status updates perform addition given the two fragments in the status update. The result is added to the user's value and stored in the user.
 
