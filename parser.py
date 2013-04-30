@@ -1,5 +1,7 @@
 #! /usr/bin/env python
 
+from __future__ import print_function
+
 import re
 import sys
 import warnings
@@ -90,7 +92,7 @@ class Parser:
 				if len(input) > 0:
 					self.variables[instruction.author] += ord(input[0])
 			elif instruction.is_output():
-				print chr(self.variables[instruction.author])
+				print("%s" % chr(self.variables[instruction.author]), end='')
 
 			print "PC =", pc, self.variables
 
@@ -120,6 +122,8 @@ class Parser:
 
 			if not looping:
 				pc -= 1
+
+		print()
 
 def main():
 	parser = Parser(sys.argv[1])
