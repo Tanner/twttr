@@ -25,6 +25,10 @@ class Instruction:
 		"""Extracts the hashtags (#tag) from the status."""
 		return re.findall(r"#([A-Za-z]+)", self.status)
 
+	def remove_hashtags(self):
+		"""Return the status of any hashtags."""
+		return re.sub(r"#[A-Za-z]+", "", self.status).strip()
+
 	def is_creation(self):
 		"""Detects whether the instruction is a variable declaration."""
 		return re.search(r"first [tweet|status|post]", self.status, re.IGNORECASE) != None
@@ -40,11 +44,11 @@ class Instruction:
 
 	def is_input(self):
 		"""Detects whether the instruction is asking for input."""
-		return self.status[-1] == '?'
+		return self.remove_hashtags()[-1] == '?'
 
 	def is_output(self):
 		"""Detects whether the instruction is a print."""
-		return self.status[-1] == '!'
+		return self.remove_hashtags()[-1] == '!'
 
 	def __count_words(self, string):
 		"""Count the number of words in a string."""
