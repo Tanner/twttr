@@ -2,6 +2,7 @@
 
 import re
 import sys
+import warnings
 
 class Instruction:
 	"""Class that represents a twttr instruction."""
@@ -68,7 +69,7 @@ class Parser:
 				if instruction.author not in self.variables:
 					self.variables[instruction.author] = 0
 				else:
-					print "Warning: Reached variable creation tweet, but user already a variable"
+					warnings.warn("Warning: Reached variable creation tweet, but user already a variable", RuntimeWarning)
 
 def main():
 	parser = Parser(sys.argv[1])
