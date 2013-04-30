@@ -74,7 +74,7 @@ class Parser:
 				else:
 					self.hashtags[hashtag] = [i]
 
-	def run(self):
+	def run(self, debug=True):
 		looping = False
 
 		pc = len(self.instructions) - 1
@@ -92,9 +92,13 @@ class Parser:
 				if len(input) > 0:
 					self.variables[instruction.author] += ord(input[0])
 			elif instruction.is_output():
-				print("%s" % chr(self.variables[instruction.author]), end='')
+				if debug:
+					print("%s" % chr(self.variables[instruction.author]))
+				else:
+					print("%s" % chr(self.variables[instruction.author]), end='')
 
-			print "PC =", pc, self.variables
+			if debug:
+				print("PC = %d %s", pc, self.variables)
 
 			hashtags = instruction.extract_hashtags()
 
@@ -128,7 +132,7 @@ class Parser:
 def main():
 	parser = Parser(sys.argv[1])
 
-	parser.run()
+	parser.run(True)
 
 if __name__ =='__main__':
 	main()
