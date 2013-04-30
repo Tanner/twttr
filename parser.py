@@ -70,6 +70,15 @@ class Parser:
 					self.variables[instruction.author] = 0
 				else:
 					warnings.warn("Warning: Reached variable creation tweet, but user already a variable", RuntimeWarning)
+			elif instruction.is_input():
+				input = raw_input(instruction.status + " ")
+
+				if len(input) > 0:
+					self.variables[instruction.author] += ord(input[0])
+			elif instruction.is_output():
+				print chr(self.variables[instruction.author])
+			else:
+				self.variables[instruction.author] += instruction.value()
 
 def main():
 	parser = Parser(sys.argv[1])
