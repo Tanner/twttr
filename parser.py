@@ -24,6 +24,10 @@ class Instruction:
 		"""Extracts the hashtags (#tag) from the status."""
 		return re.findall(r"#([A-Za-z]+)", self.status)
 
+	def is_creation(self):
+		"""Detects whether the instruction is a variable declaration."""
+		return re.search(r"first [tweet|status|post]", self.status, re.IGNORECASE) != None
+
 	def value(self):
 		"""Read the value of the status based on the number of words in the first two sentences."""
 		fragments = re.findall(r"([A-Za-z ]+)[\.,;:-] ?", self.status)
