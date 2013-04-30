@@ -73,12 +73,15 @@ class Parser:
 					self.hashtags[hashtag] = [i]
 
 	def run(self):
-		for i in reversed(range(len(self.instructions))):
-			instruction = self.instructions[i]
+		looping = False
+
+		pc = len(self.instructions) - 1
+		while pc >= 0:
+			instruction = self.instructions[pc]
 
 			if instruction.author not in self.variables:
 				self.variables[instruction.author] = 0
-			
+
 			if instruction.is_input():
 				input = raw_input(instruction.status + " ")
 
@@ -88,8 +91,34 @@ class Parser:
 				print chr(self.variables[instruction.author])
 
 			self.variables[instruction.author] += instruction.value()
+			print "PC =", pc, self.variables
 
-		print self.variables
+			hashtags = instruction.extract_hashtags()
+
+			if len(hashtags) > 0:
+				for hashtag in hashtags:
+					if len(self.hashtags[hashtag]) > 0:
+						# Found a hashtag that has more than one instance
+						indices = self.hashtags[hashtag]
+
+						current_index = indices.index(pc)
+
+						if current_index == len(indices) - 1:
+							# Currently at the last instance of this hashtag
+							if self.variables[instruction.author] != 0:
+								pc = indices[0]
+								looping = True
+							else:
+								looping = False
+						else:
+							# Not at the last instance of this hashtag
+							if looping:
+								pc = indices[current_index + 1]
+
+						break
+
+			if not looping:
+				pc -= 1
 
 def main():
 	parser = Parser(sys.argv[1])
