@@ -82,6 +82,8 @@ class Parser:
 			if instruction.author not in self.variables:
 				self.variables[instruction.author] = 0
 
+			self.variables[instruction.author] += instruction.value()
+
 			if instruction.is_input():
 				input = raw_input(instruction.status + " ")
 
@@ -90,7 +92,6 @@ class Parser:
 			elif instruction.is_output():
 				print chr(self.variables[instruction.author])
 
-			self.variables[instruction.author] += instruction.value()
 			print "PC =", pc, self.variables
 
 			hashtags = instruction.extract_hashtags()
