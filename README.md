@@ -36,7 +36,7 @@ Twitter users are created by making a first tweet. Initially all users have a va
 ## Status
 Regular status updates perform addition given the two fragments in the status update. The result is added to the user's value and stored in the user.
 
-A fragment is defined as words before puncuation marks, e.g. `.,;:-`.
+A fragment is defined as words before puncuation marks, e.g. `.,!;?:-`.
 
 The number added is determined by the number of words in either the two fragments. The first fragment is indiciated as positive numbers and the second fragment is negative numbers.
 
@@ -89,11 +89,9 @@ Hashtags are used to indicate instructions related to a branch.
 tanner: Heading over to the hotel #wwdc
 ```
 
-A branch is a status that contains a question and a hashtag. The branch will be taken if the value of the author is not zero.
+A branch is a status that contains the last instance of a hashtag. The branch will be taken if the value of the author is not zero.
 
 The target of the branch is the first use of the hashtag. The next instruction executed following that instruction is any status update containing the hashtag. The branch is reevaluated when the original branch statement is reached.
-
-Any further uses of the hashtag after the branch are ignored.
 
 ```
 tanner: Who is at the hotel? #wwdc
