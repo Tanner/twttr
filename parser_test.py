@@ -31,6 +31,7 @@ class TestInstruction(unittest.TestCase):
 		self.assertEqual(Instruction("tannerld: Hmm. That darn cat.").value(), -2)
 		self.assertEqual(Instruction("tannerld: I love you. That darn cat.").value(), 0)
 		self.assertEqual(Instruction("tannerld: Is this right... No.").value(), 2)
+		self.assertEqual(Instruction("tannerld: I'm not sure. This is mine.").value(), 0)
 
 	def test_input(self):
 		self.assertTrue(Instruction("tannerld: Is this life?").is_input())

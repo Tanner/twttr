@@ -48,7 +48,7 @@ class Instruction:
 
 	def __count_words(self, string):
 		"""Count the number of words in a string."""
-		return len(re.findall(r"([A-Za-z\.\"-]+) ?", string))
+		return len(re.findall(r"([A-Za-z\.\"-']+) ?", string))
 
 class Parser:
 	"""Class that parses a twttr program."""
@@ -78,7 +78,7 @@ class Parser:
 
 			self.variables[instruction.author] += instruction.value()
 
-			print instruction.author, "=", self.variables[instruction.author]
+		print self.variables
 
 def main():
 	parser = Parser(sys.argv[1])
