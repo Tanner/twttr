@@ -77,8 +77,8 @@ class Parser:
 					self.variables[instruction.author] += ord(input[0])
 			elif instruction.is_output():
 				print chr(self.variables[instruction.author])
-			else:
-				self.variables[instruction.author] += instruction.value()
+
+			self.variables[instruction.author] += instruction.value()
 
 def main():
 	parser = Parser(sys.argv[1])
