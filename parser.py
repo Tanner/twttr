@@ -61,6 +61,17 @@ class Parser:
 			for line in f:
 				self.instructions.append(Instruction(line))
 
+		self.hashtags = {}
+
+		for i in reversed(range(len(self.instructions))):
+			instruction = self.instructions[i]
+
+			for hashtag in instruction.extract_hashtags():
+				if hashtag in self.hashtags:
+					self.hashtags[hashtag].append(i)
+				else:
+					self.hashtags[hashtag] = [i]
+
 	def run(self):
 		for i in reversed(range(len(self.instructions))):
 			instruction = self.instructions[i]
