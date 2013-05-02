@@ -10,6 +10,7 @@ class Instruction:
 	"""Class that represents a twttr instruction."""
 
 	def __init__(self, instruction):
+		"""Create an instruction given its string."""
 		match = re.match(r"([a-zA-Z]+): (.+)", instruction)
 
 		if match == None:
@@ -22,15 +23,7 @@ class Instruction:
 			raise ValueError('Tweet must be less than or equal to 140 characters')
 
 		self.status_no_hashtags = self.__remove_hashtags()
-		self.hashtags = self.__extract_hashtags();
-
-	def __extract_hashtags(self):
-		"""Extracts the hashtags (#tag) from the status."""
-		return re.findall(r"#([A-Za-z]+)", self.status)
-
-	def __remove_hashtags(self):
-		"""Return the status of any hashtags."""
-		return re.sub(r"#[A-Za-z]+", "", self.status).strip()
+		self.hashtags = self.__extract_hashtags()
 
 	def value(self):
 		"""Read the value of the status based on the number of words in the first two sentences."""
@@ -42,21 +35,30 @@ class Instruction:
 		return self.__count_words(fragments[0]) - self.__count_words(fragments[1])
 
 	def is_input(self):
-		"""Detects whether the instruction is asking for input."""
+		"""Detect whether the instruction is asking for input."""
 		return self.status_no_hashtags[-1] == '?'
 
 	def is_output(self):
-		"""Detects whether the instruction is a print."""
+		"""Detect whether the instruction is a print."""
 		return self.status_no_hashtags[-1] == '!'
 
 	def __count_words(self, string):
 		"""Count the number of words in a string."""
 		return len(re.findall(r"([A-Za-z\.\"-']+) ?", string))
 
+	def __extract_hashtags(self):
+		"""Extract the hashtags (#tag) from the status."""
+		return re.findall(r"#([A-Za-z]+)", self.status)
+
+	def __remove_hashtags(self):
+		"""Return the status of any hashtags."""
+		return re.sub(r"#[A-Za-z]+", "", self.status).strip()
+
 class Parser:
 	"""Class that parses a twttr program."""
 
 	def __init__(self, file):
+		"""Create a parser using the twttr program from the given file."""
 		self.instructions = []
 		self.variables = {}
 
@@ -66,6 +68,7 @@ class Parser:
 
 		self.hashtags = {}
 
+		# Extract hashtags from all the instructions for branching purposes
 		for i in reversed(range(len(self.instructions))):
 			instruction = self.instructions[i]
 
@@ -76,6 +79,7 @@ class Parser:
 					self.hashtags[hashtag] = [i]
 
 	def run(self, debug=False):
+		"""Run the twttr program."""
 		looping = False
 
 		pc = len(self.instructions) - 1
@@ -131,6 +135,7 @@ class Parser:
 		print()
 
 def main():
+	"""Run that twttr program taking the first CLI argument to be the file containing the program."""
 	parser = Parser(sys.argv[1])
 
 	parser.run()
