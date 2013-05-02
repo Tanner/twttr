@@ -74,7 +74,7 @@ class Parser:
 				else:
 					self.hashtags[hashtag] = [i]
 
-	def run(self, debug=True):
+	def run(self, debug=False):
 		looping = False
 
 		pc = len(self.instructions) - 1
@@ -132,7 +132,7 @@ class Parser:
 def main():
 	parser = Parser(sys.argv[1])
 
-	parser.run(True)
+	parser.run()
 
 if __name__ =='__main__':
 	main()
