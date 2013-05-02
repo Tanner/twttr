@@ -21,9 +21,9 @@ class Instruction:
 		if len(self.status) > 140:
 			raise ValueError('Tweet must be less than or equal to 140 characters')
 
-		self.hashtags = self.extract_hashtags();
+		self.hashtags = self.__extract_hashtags();
 
-	def extract_hashtags(self):
+	def __extract_hashtags(self):
 		"""Extracts the hashtags (#tag) from the status."""
 		return re.findall(r"#([A-Za-z]+)", self.status)
 
@@ -68,7 +68,7 @@ class Parser:
 		for i in reversed(range(len(self.instructions))):
 			instruction = self.instructions[i]
 
-			for hashtag in instruction.extract_hashtags():
+			for hashtag in instruction.hashtags:
 				if hashtag in self.hashtags:
 					self.hashtags[hashtag].append(i)
 				else:
@@ -100,7 +100,7 @@ class Parser:
 			if debug:
 				print("PC = %d %s", pc, self.variables)
 
-			hashtags = instruction.extract_hashtags()
+			hashtags = instruction.hashtags
 
 			if len(hashtags) > 0:
 				for hashtag in hashtags:
