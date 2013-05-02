@@ -21,13 +21,14 @@ class Instruction:
 		if len(self.status) > 140:
 			raise ValueError('Tweet must be less than or equal to 140 characters')
 
+		self.status_no_hashtags = self.__remove_hashtags()
 		self.hashtags = self.__extract_hashtags();
 
 	def __extract_hashtags(self):
 		"""Extracts the hashtags (#tag) from the status."""
 		return re.findall(r"#([A-Za-z]+)", self.status)
 
-	def remove_hashtags(self):
+	def __remove_hashtags(self):
 		"""Return the status of any hashtags."""
 		return re.sub(r"#[A-Za-z]+", "", self.status).strip()
 
@@ -42,11 +43,11 @@ class Instruction:
 
 	def is_input(self):
 		"""Detects whether the instruction is asking for input."""
-		return self.remove_hashtags()[-1] == '?'
+		return self.status_no_hashtags[-1] == '?'
 
 	def is_output(self):
 		"""Detects whether the instruction is a print."""
-		return self.remove_hashtags()[-1] == '!'
+		return self.status_no_hashtags[-1] == '!'
 
 	def __count_words(self, string):
 		"""Count the number of words in a string."""
