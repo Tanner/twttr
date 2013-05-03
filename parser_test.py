@@ -59,5 +59,17 @@ class TestParser(unittest.TestCase):
 
 		self.assertEqual(self.output.getvalue(), "Hello World!\n")
 
+	def test_branching(self):
+		code = """tannerld: My cat hates me. It knows something about me. #cat
+ryan: Plus two. Maybe. #cat
+tannerld: I love my kitty cat."""
+
+		parser = Parser(code)
+
+		parser.run()
+
+		self.assertEqual(parser.variables['tannerld'], 0)
+		self.assertEqual(parser.variables['ryan'], 5)
+
 if __name__ == '__main__':
 	unittest.main()
