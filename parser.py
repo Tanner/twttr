@@ -104,10 +104,11 @@ class Parser:
 				if len(input) > 0:
 					self.variables[instruction.author] += ord(input[0])
 			elif instruction.is_output():
-				if debug:
-					print("%s" % chr(self.variables[instruction.author]))
-				else:
-					print("%s" % chr(self.variables[instruction.author]), end='')
+				if self.variables[instruction.author] in range(256):
+					if debug:
+						print("%s" % chr(self.variables[instruction.author]))
+					else:
+						print("%s" % chr(self.variables[instruction.author]), end='')
 
 			if debug:
 				print("PC = %d %s", pc, self.variables)
