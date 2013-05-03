@@ -1,8 +1,10 @@
 #! /usr/bin/env python
 
+import StringIO
+import sys
 import unittest
 
-from parser import Instruction
+from parser import Instruction, Parser
 
 class TestInstruction(unittest.TestCase):
 	def test_construction(self):
@@ -40,6 +42,22 @@ class TestInstruction(unittest.TestCase):
 	def test_output(self):
 		self.assertTrue(Instruction("tannerld: Is this life!").is_output())
 		self.assertFalse(Instruction("tannerld: Is this life! No.").is_output())
+
+class TestParser(unittest.TestCase):
+	def setUp(self):
+		sys.stdout = self.output = StringIO.StringIO()
+
+	def tearDown(self):
+		self.output.close()
+
+		sys.stdout = sys.__stdout__
+
+	def test_hello_world(self):
+		parser = Parser.from_file("hello_world.twttr")
+
+		parser.run()
+
+		self.assertEqual(self.output.getvalue(), "Hello World!\n")
 
 if __name__ == '__main__':
 	unittest.main()
