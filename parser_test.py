@@ -19,11 +19,11 @@ class TestInstruction(unittest.TestCase):
 	def test_extract_hashtags(self):
 		instruction = Instruction("tannerld: I love #cats. Maybe. #kitty")
 
-		self.assertEqual(instruction.extract_hashtags(), ["cats", "kitty"])
+		self.assertEqual(instruction.hashtags, ["cats", "kitty"])
 
 		instruction = Instruction("tannerld: I love cats.")
 
-		self.assertEqual(instruction.extract_hashtags(), [])
+		self.assertEqual(instruction.hashtags, [])
 
 	def test_value(self):
 		self.assertEqual(Instruction("tannerld: I love cats. Maybe.").value(), 2)
