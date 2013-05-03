@@ -57,14 +57,15 @@ class Instruction:
 class Parser:
 	"""Class that parses a twttr program."""
 
-	def __init__(self, file):
-		"""Create a parser using the twttr program from the given file."""
+	def __init__(self, code):
+		"""Create a parser using the given twttr program."""
 		self.instructions = []
 		self.variables = {}
 
-		with open(file, 'r') as f:
-			for line in f:
-				self.instructions.append(Instruction(line))
+		lines = code.splitlines()
+
+		for line in lines:
+			self.instructions.append(Instruction(line))
 
 		self.hashtags = {}
 
@@ -77,6 +78,12 @@ class Parser:
 					self.hashtags[hashtag].append(i)
 				else:
 					self.hashtags[hashtag] = [i]
+
+	@classmethod
+	def from_file(self, file):
+		"""Read in code from a file and create a parser."""
+		with open(file, 'r') as f:
+			return self(f.read())
 
 	def run(self, debug=False):
 		"""Run the twttr program."""
@@ -136,7 +143,7 @@ class Parser:
 
 def main():
 	"""Run that twttr program taking the first CLI argument to be the file containing the program."""
-	parser = Parser(sys.argv[1])
+	parser = Parser.from_file(sys.argv[1])
 
 	parser.run()
 
