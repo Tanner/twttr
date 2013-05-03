@@ -59,6 +59,23 @@ class TestParser(unittest.TestCase):
 
 		self.assertEqual(self.output.getvalue(), "Hello World!\n")
 
+	def test_basic_math(self):
+		code = """tannerld: My cat.
+ryan: This is my life. I think so.
+carly: No. I don't like you.
+fred: I think this is my life!
+bob: I hate all of you. Again I hate all of you!"""
+
+		parser = Parser(code)
+
+		parser.run()
+
+		self.assertEqual(parser.variables['tannerld'], 2)
+		self.assertEqual(parser.variables['ryan'], 1)
+		self.assertEqual(parser.variables['carly'], -3)
+		self.assertEqual(parser.variables['fred'], 6)
+		self.assertEqual(parser.variables['bob'], -1)
+
 	def test_branching(self):
 		code = """tannerld: My cat hates me. It knows something about me. #cat
 ryan: Plus two. Maybe. #cat
