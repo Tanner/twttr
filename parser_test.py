@@ -76,6 +76,16 @@ bob: I hate all of you. Again I hate all of you!"""
 		self.assertEqual(parser.variables['fred'], 6)
 		self.assertEqual(parser.variables['bob'], -1)
 
+	def test_printing(self):
+		code = """tannerld: It was a triumph!
+ryan: My best was then. My worst will be tomorrow!"""
+
+		parser = Parser(code)
+
+		parser.run()
+
+		self.assertEqual(self.output.getvalue(), chr(4) + "\n")
+
 	def test_branching(self):
 		code = """tannerld: My cat hates me. It knows something about me. #cat
 ryan: Plus two. Maybe. #cat
