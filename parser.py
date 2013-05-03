@@ -62,6 +62,9 @@ class Parser:
 		self.instructions = []
 		self.variables = {}
 
+		self.input = sys.stdin
+		self.output = sys.stdout
+
 		lines = code.splitlines()
 
 		for line in lines:
@@ -99,19 +102,20 @@ class Parser:
 			self.variables[instruction.author] += instruction.value()
 
 			if instruction.is_input():
-				input = raw_input(instruction.status + " ")
+				self.output.write(instruction.status + " ")
+				input = self.input.read(1)
 
 				if len(input) > 0:
 					self.variables[instruction.author] += ord(input[0])
 			elif instruction.is_output():
 				if self.variables[instruction.author] in range(256):
 					if debug:
-						print("%s" % chr(self.variables[instruction.author]))
+						self.output.write("%s\n" % chr(self.variables[instruction.author]))
 					else:
-						print("%s" % chr(self.variables[instruction.author]), end='')
+						self.output.write("%s" % chr(self.variables[instruction.author]))
 
 			if debug:
-				print("PC = %d %s", pc, self.variables)
+				self.output.write("PC = %d %s\n", pc, self.variables)
 
 			hashtags = instruction.hashtags
 
@@ -139,8 +143,6 @@ class Parser:
 
 			if not looping:
 				pc -= 1
-
-		print()
 
 def main():
 	"""Run that twttr program taking the first CLI argument to be the file containing the program."""

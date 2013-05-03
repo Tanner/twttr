@@ -45,19 +45,21 @@ class TestInstruction(unittest.TestCase):
 
 class TestParser(unittest.TestCase):
 	def setUp(self):
-		sys.stdout = self.output = StringIO.StringIO()
+		self.output = StringIO.StringIO()
+		self.input = StringIO.StringIO()
 
 	def tearDown(self):
 		self.output.close()
-
-		sys.stdout = sys.__stdout__
+		self.input.close()
 
 	def test_hello_world(self):
 		parser = Parser.from_file("hello_world.twttr")
+		parser.output = self.output
+		parser.input = self.input
 
 		parser.run()
 
-		self.assertEqual(self.output.getvalue(), "Hello World!\n")
+		self.assertEqual(self.output.getvalue(), "Hello World!")
 
 	def test_basic_math(self):
 		code = """tannerld: My cat.
@@ -81,10 +83,12 @@ bob: I hate all of you. Again I hate all of you!"""
 ryan: My best was then. My worst will be tomorrow!"""
 
 		parser = Parser(code)
+		parser.output = self.output
+		parser.input = self.input
 
 		parser.run()
 
-		self.assertEqual(self.output.getvalue(), chr(4) + "\n")
+		self.assertEqual(self.output.getvalue(), chr(4))
 
 	def test_branching(self):
 		code = """tannerld: My cat hates me. It knows something about me. #cat
