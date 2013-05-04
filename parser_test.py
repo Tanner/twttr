@@ -78,6 +78,22 @@ bob: I hate all of you. Again I hate all of you!"""
 		self.assertEqual(parser.variables['fred'], 6)
 		self.assertEqual(parser.variables['bob'], -1)
 
+	def test_input(self):
+		code = """tannerld: Do you know the answer?
+ryan: I do not know. But do you know?"""
+
+		parser = Parser(code)
+		parser.output = self.output
+		parser.input = self.input
+
+		self.input.write('aa')
+		self.input.seek(0)
+
+		parser.run()
+
+		self.assertEqual(parser.variables['tannerld'], 102)
+		self.assertEqual(parser.variables['ryan'], 97)
+
 	def test_printing(self):
 		code = """tannerld: It was a triumph!
 ryan: My best was then. My worst will be tomorrow!"""
