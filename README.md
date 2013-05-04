@@ -30,35 +30,47 @@ Adapted from [Brainfuck Hello World](http://en.wikipedia.org/wiki/Brainfuck#Hell
 ## Variables
 Twitter users are variables. They store and hold signed integers.
 
+For simplicity, all users must only contain alphanumeric characters.
+
 ### Creation
 Twitter users are created by making a first tweet. Initially all users have a value of zero.
 
 ## Status
-Regular status updates perform addition given the two fragments in the status update. The result is added to the user's value and stored in the user.
+All status updates perform addition given the two fragments in the status update. The result is added to the user's value and stored in the user.
 
-A fragment is defined as words before puncuation marks, e.g. `.,!;?:-`.
+A fragment is defined as words before puncuation marks, e.g. `.,!;\?:-`.
 
-The number added is determined by the number of words in either the two fragments. The first fragment is indiciated as positive numbers and the second fragment is negative numbers.
+The number added to the user is determined by the number of words in the two fragments. The first fragment is indiciated as positive numbers and the second fragment is negative numbers.
 
 ```
 tannerld: This is my cat. I love it.
 ryan: I hate my job. Someone please find me a new.
+```
 
-tanner = 1
+Results in:
+```
+tannerld = 1
 ryan = -2
 ```
 
 ### Input
-Input is received from the user when a status ends in a question mark (excluding branches). The resulting ASCII value is stored in the author.
+Input is received from the user when a status ends in a question mark (excluding hashtags). The resulting ASCII value is added to the author.
 
-The prompt is the status text.
+The prompt for the input is the status text.
 
 ```
 tannerld: Do you like coffee?
 ```
 
+Results in:
+```
+Do you like coffee? A
+
+tannerld = 65
+```
+
 ### Printing
-Printing the user's value is done by ending the last sentence in the status with a exclamation point.
+Printing the user's value is done when a status ends in a exclamation mark (excluding hashtags).
 
 ```
 tannerld: I love coffee!
@@ -68,33 +80,49 @@ tannerld: I love coffee!
 Mentions subtracts the value of the user mentioned from the author.
 
 ```
-tanner: Having a great time with @ryan at WWDC.
+tannerld: Having a great time with @ryan at this concert.
+```
 
-tanner = tanner - ryan
+Results in:
+```
+tannerld = tannerld - ryan
 ```
 
 ## @replies
 @replies adds the value of the user mentioned to the author.
 
 ```
-tanner: @ryan I'm heading over to the food court.
+tannerld: @ryan I'm heading over to the food court.
+```
 
-tanner = tanner + ryan
+Results in:
+```
+tannerld = tannerld + ryan
 ```
 
 ## Hashtags
 Hashtags are used to indicate instructions related to a branch.
 
 ```
-tanner: Heading over to the hotel #wwdc
+tannerld: Heading over to the hotel #foofighters
 ```
 
-A branch is a status that contains the last instance of a hashtag. The branch will be taken if the value of the author is not zero.
+A branch is a status that contains the last instance of a hashtag. The branch will be taken if the value of the author is not zero. The target of the branch is the first use of the hashtag.
 
-The target of the branch is the first use of the hashtag. The next instruction executed following that instruction is any status update containing the hashtag. The branch is reevaluated when the original branch statement is reached.
+If the branch has been taken, the only instructions that will be executed must contain the hashtag that caused the branch.
+
+The branch is reevaluated when the original branch instruction statement is reached.
 
 ```
-tanner: Who is at the hotel? #wwdc
+tannerld: My cat hates me. It knows something about me. #cat
+ryan: Plus two. Maybe. #cat
+tannerld: I love my kitty cat.
+```
+
+Results in:
+```
+tannerld = 0
+ryan = 5
 ```
 
 ## Retweets
@@ -102,8 +130,15 @@ Retweets assign the value of the user who was retweeted to the user who retweete
 
 Note: The value assigned is whatever value the user was assigned at the time of the status update.
 
-The below example stores the value from `ryan` into `tanner`.
-
 ```
-tanner: RT @ryan "Baking a cake"
+tannerld: RT @ryan Dancing is not cool. That is definitely not cool.
+ryan: Ok maybe this is cool.
+ryan: Dancing is not cool. That is definitely not cool.
+ryan: Not sure if I'm ready for this.
+```
+
+Results in:
+```
+tannerld = 6
+ryan = 11
 ```
