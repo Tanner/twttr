@@ -45,6 +45,29 @@ class Instruction:
 		"""Detect whether the instruction is a print."""
 		return self.status_no_hashtags[-1] == '!'
 
+	def is_retweet(self):
+		"""Detect whether the instruction is a retweet.
+
+		e.g. ryan: RT @tannerld This cat is the best cat ever.
+
+		The user 'ryan' is retweeted (RT) a tweet from the user 'tannerld'."""
+		return self.status[0:2] == "RT"
+
+	def retweet(self):
+		"""Return the author and the status that was retweeted."""
+		if self.is_retweet():
+			match = re.match(r"RT @([a-zA-Z]+) (.+)", self.status)
+
+			if not match:
+				return (None, None)
+
+			author = match.group(1)
+			status = match.group(2)
+
+			return (author, status)
+		else:
+			return (None, None)
+
 	def __count_words(self, string):
 		"""Count the number of words in a string."""
 		return len(re.findall(r"([A-Za-z\.\"-']+) ?", string))

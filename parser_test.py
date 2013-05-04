@@ -67,6 +67,16 @@ class TestInstruction(unittest.TestCase):
 		self.assertTrue(Instruction("tannerld: Is this life!").is_output())
 		self.assertFalse(Instruction("tannerld: Is this life! No.").is_output())
 
+	def test_is_retweet(self):
+		self.assertTrue(Instruction("ryan: RT @tannerld Is this life?").is_retweet())
+		self.assertFalse(Instruction("tannerld: Is this life! No.").is_retweet())
+		self.assertFalse(Instruction("tannerld: @ryan Things are crazy here.").is_retweet())
+
+	def test_retweet(self):
+		self.assertEqual(Instruction("ryan: RT @tannerld Is this life?").retweet(), ("tannerld", "Is this life?"))
+		self.assertEqual(Instruction("tannerld: Is this life! No.").retweet(), (None, None))
+		self.assertEqual(Instruction("tannerld: @ryan Things are crazy here.").retweet(), (None, None))
+
 class TestParser(unittest.TestCase):
 	def setUp(self):
 		self.output = StringIO.StringIO()
