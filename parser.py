@@ -25,6 +25,8 @@ class Instruction:
 		self.status_no_hashtags = self.__remove_hashtags()
 		self.hashtags = self.__extract_hashtags()
 
+		self.at_repliee = self.__extract_at_repliee()
+
 	def value(self):
 		"""Read the value of the status based on the number of words in the first two sentences."""
 		fragments = re.findall(r"([A-Za-z '-]+)[\.,!;\?:-] ?", self.status)
@@ -53,6 +55,19 @@ class Instruction:
 	def __remove_hashtags(self):
 		"""Return the status of any hashtags."""
 		return re.sub(r"#[A-Za-z]+", "", self.status).strip()
+
+	def __extract_at_repliee(self):
+		"""Extract the at-repliee from the status.
+
+		e.g. tannerld: @ryan Things are crazy here.
+
+		The at-repliee is the user 'ryan'."""
+		matches = re.match(r"@([A-Za-z0-9]+)", self.status)
+
+		if matches:
+			return matches.group(1)
+		else:
+			return None
 
 class Parser:
 	"""Class that parses a twttr program."""
@@ -101,7 +116,10 @@ class Parser:
 
 			self.variables[instruction.author] += instruction.value()
 
-			if instruction.is_input():
+			if instruction.at_repliee:
+				if instruction.at_repliee in self.variables:
+					self.variables[instruction.author] += self.variables[instruction.at_repliee]
+			elif instruction.is_input():
 				self.output.write(instruction.status + " ")
 				input = self.input.read(1)
 

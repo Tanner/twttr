@@ -27,6 +27,22 @@ class TestInstruction(unittest.TestCase):
 
 		self.assertEqual(instruction.hashtags, [])
 
+	def test_at_repliee(self):
+		instruction = Instruction("tannerld: @ryan Things are crazy here.")
+
+		self.assertEqual(instruction.status, "@ryan Things are crazy here.")
+		self.assertEqual(instruction.at_repliee, "ryan")
+
+		instruction = Instruction("tannerld: Things are crazy here.")
+
+		self.assertEqual(instruction.status, "Things are crazy here.")
+		self.assertEqual(instruction.at_repliee, None)
+
+		instruction = Instruction("tannerld: Things are crazy here at the @ryan house.")
+
+		self.assertEqual(instruction.status, "Things are crazy here at the @ryan house.")
+		self.assertEqual(instruction.at_repliee, None)
+
 	def test_value(self):
 		self.assertEqual(Instruction("tannerld: I love cats. Maybe.").value(), 2)
 		self.assertEqual(Instruction("tannerld: I love cats.").value(), 3)
@@ -77,6 +93,18 @@ bob: I hate all of you. Again I hate all of you!"""
 		self.assertEqual(parser.variables['carly'], -3)
 		self.assertEqual(parser.variables['fred'], 6)
 		self.assertEqual(parser.variables['bob'], -1)
+
+	def test_at_reply(self):
+		code = """tannerld: I am the one.
+ryan: I am not the one.
+tannerld: @ryan Are you sure?"""
+
+		parser = Parser(code)
+
+		parser.run()
+
+		self.assertEqual(parser.variables['tannerld'], 8)
+		self.assertEqual(parser.variables['ryan'], 5)
 
 	def test_input(self):
 		code = """tannerld: Do you know the answer?
