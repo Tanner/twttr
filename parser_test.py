@@ -43,6 +43,14 @@ class TestInstruction(unittest.TestCase):
 		self.assertEqual(instruction.status, "Things are crazy here at the @ryan house.")
 		self.assertEqual(instruction.at_repliee, None)
 
+	def test_mentions(self):
+		self.assertEqual(Instruction("tannerld: @ryan Things are crazy here.").mentions, [])
+		self.assertEqual(Instruction("tannerld: Things are crazy here.").mentions, [])
+		self.assertEqual(Instruction("tannerld: I love @ryan's house.").mentions, ["ryan"])
+		self.assertEqual(Instruction("tannerld: I love the @ryan house.").mentions, ["ryan"])
+		self.assertEqual(Instruction("tannerld: This cat is awesome. @ryan").mentions, ["ryan"])
+		self.assertEqual(Instruction("tannerld: Having dinner with @ryan and @bob.").mentions, ["ryan", "bob"])
+
 	def test_value(self):
 		self.assertEqual(Instruction("tannerld: I love cats. Maybe.").value(), 2)
 		self.assertEqual(Instruction("tannerld: I love cats.").value(), 3)
@@ -104,6 +112,18 @@ tannerld: @ryan Are you sure?"""
 		parser.run()
 
 		self.assertEqual(parser.variables['tannerld'], 8)
+		self.assertEqual(parser.variables['ryan'], 5)
+
+	def test_mentions(self):
+		code = """tannerld: This is not cool.
+ryan: I love driving in cars.
+tannerld: I'm not sure I like @ryan's car."""
+
+		parser = Parser(code)
+
+		parser.run()
+
+		self.assertEqual(parser.variables['tannerld'], 6)
 		self.assertEqual(parser.variables['ryan'], 5)
 
 	def test_input(self):

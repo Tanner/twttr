@@ -26,6 +26,7 @@ class Instruction:
 		self.hashtags = self.__extract_hashtags()
 
 		self.at_repliee = self.__extract_at_repliee()
+		self.mentions = self.__extract_mentions()
 
 	def value(self):
 		"""Read the value of the status based on the number of words in the first two sentences."""
@@ -68,6 +69,14 @@ class Instruction:
 			return matches.group(1)
 		else:
 			return None
+
+	def __extract_mentions(self):
+		"""Extract mentions from the status.
+
+		e.g. tannerld: This cat at @ryan's is awesome.
+
+		The mention is the user 'ryan'."""
+		return re.findall(r".@([A-Za-z0-9]+)", self.status)
 
 class Parser:
 	"""Class that parses a twttr program."""
@@ -119,6 +128,10 @@ class Parser:
 			if instruction.at_repliee:
 				if instruction.at_repliee in self.variables:
 					self.variables[instruction.author] += self.variables[instruction.at_repliee]
+			elif len(instruction.mentions) > 0:
+				for user in instruction.mentions:
+					if user in self.variables:
+						self.variables[instruction.author] -= self.variables[user]
 			elif instruction.is_input():
 				self.output.write(instruction.status + " ")
 				input = self.input.read(1)
