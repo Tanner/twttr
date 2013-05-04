@@ -30,7 +30,7 @@ Adapted from [Brainfuck Hello World](http://en.wikipedia.org/wiki/Brainfuck#Hell
 ## Variables
 Twitter users are variables. They store and hold signed integers.
 
-For simplicity, all users must only contain alphanumeric characters.
+For simplicity, usernames can only contain alphanumeric characters.
 
 ### Creation
 Twitter users are created by making a first tweet. Initially all users have a value of zero.
@@ -102,6 +102,8 @@ tannerld = tannerld + ryan
 
 ## Hashtags
 Hashtags are used to indicate instructions related to a branch.
+
+For simplicity, hashtags can only contain alphabetic characters.
 
 ```
 tannerld: Heading over to the hotel #foofighters
