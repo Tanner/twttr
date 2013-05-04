@@ -10,7 +10,7 @@ class Instruction:
 
 	def __init__(self, instruction):
 		"""Create an instruction given its string."""
-		match = re.match(r"([a-zA-Z]+): (.+)", instruction)
+		match = re.match(r"([A-Za-z0-9]+): (.+)", instruction)
 
 		if match == None:
 			raise ValueError('Instruction is not valid format of "author: status"')
@@ -57,7 +57,7 @@ class Instruction:
 	def retweet(self):
 		"""Return the author and the status that was retweeted."""
 		if self.is_retweet():
-			match = re.match(r"RT @([a-zA-Z]+) (.+)", self.status)
+			match = re.match(r"RT @([A-Za-z0-9]+) (.+)", self.status)
 
 			if not match:
 				return (None, None)
