@@ -4,7 +4,6 @@ from __future__ import print_function
 
 import re
 import sys
-import warnings
 
 class Instruction:
 	"""Class that represents a twttr instruction."""
@@ -29,7 +28,9 @@ class Instruction:
 		self.mentions = self.__extract_mentions()
 
 	def value(self):
-		"""Read the value of the status based on the number of words in the first two sentences."""
+		"""Read the value of the status.
+
+		The value is determined by the number of words in the first 2 sentences."""
 		fragments = re.findall(r"([A-Za-z '-]+)[\.,!;\?:-] ?", self.status)
 
 		if len(fragments) == 1:
@@ -141,6 +142,7 @@ class Parser:
 		"""Run the twttr program."""
 		looping = False
 
+		# Loop through the instructions from the bottom up
 		pc = len(self.instructions) - 1
 		while pc >= 0:
 			instruction = self.instructions[pc]
@@ -160,7 +162,7 @@ class Parser:
 					if v.status == status:
 						if author in self.variables_history[i]:
 							self.variables[instruction.author] = self.variables_history[i][author]
-						
+
 						break
 			elif len(instruction.mentions) > 0:
 				for user in instruction.mentions:
@@ -214,7 +216,9 @@ class Parser:
 				pc -= 1
 
 def main():
-	"""Run that twttr program taking the first CLI argument to be the file containing the program."""
+	"""Run that twttr program.
+
+	The first CLI argument to be the file containing the program."""
 	parser = Parser.from_file(sys.argv[1])
 
 	parser.run()
