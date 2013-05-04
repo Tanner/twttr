@@ -107,7 +107,9 @@ class Parser:
 	def __init__(self, code):
 		"""Create a parser using the given twttr program."""
 		self.instructions = []
+
 		self.variables = {}
+		self.variables_history = {}
 
 		self.input = sys.stdin
 		self.output = sys.stdout
@@ -151,6 +153,15 @@ class Parser:
 			if instruction.at_repliee:
 				if instruction.at_repliee in self.variables:
 					self.variables[instruction.author] += self.variables[instruction.at_repliee]
+			elif instruction.is_retweet():
+				author, status = instruction.retweet()
+
+				for i, v in enumerate(self.instructions):
+					if v.status == status:
+						if author in self.variables_history[i]:
+							self.variables[instruction.author] = self.variables_history[i][author]
+						
+						break
 			elif len(instruction.mentions) > 0:
 				for user in instruction.mentions:
 					if user in self.variables:
@@ -170,6 +181,10 @@ class Parser:
 
 			if debug:
 				self.output.write("PC = %d %s\n", pc, self.variables)
+
+			self.variables_history[pc] = {}
+			for variable in self.variables:
+				self.variables_history[pc][variable] = self.variables[variable]
 
 			hashtags = instruction.hashtags
 

@@ -124,6 +124,19 @@ tannerld: @ryan Are you sure?"""
 		self.assertEqual(parser.variables['tannerld'], 8)
 		self.assertEqual(parser.variables['ryan'], 5)
 
+	def test_retweet(self):
+		code = """tannerld: RT @ryan Dancing is not cool. That is definitely not cool.
+ryan: Ok maybe this is cool.
+ryan: Dancing is not cool. That is definitely not cool.
+ryan: Not sure if I'm ready for this."""
+
+		parser = Parser(code)
+
+		parser.run()
+
+		self.assertEqual(parser.variables['tannerld'], 6)
+		self.assertEqual(parser.variables['ryan'], 11)
+
 	def test_mentions(self):
 		code = """tannerld: This is not cool.
 ryan: I love driving in cars.
