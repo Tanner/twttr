@@ -182,8 +182,7 @@ class Parser:
 						self.output.write("%s" % chr(self.variables[instruction.author]))
 
 			if debug:
-				self.output.write("PC = %d %s\n", pc, self.variables)
-
+				self.output.write("PC = " + str(pc) + " " + str(self.variables) + "\n")
 			self.variables_history[pc] = {}
 			for variable in self.variables:
 				self.variables_history[pc][variable] = self.variables[variable]
