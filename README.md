@@ -44,6 +44,8 @@ A fragment is defined as words before puncuation marks, e.g. `.,!;\?:-`.
 
 The number added to the user is determined by the number of words in the two fragments. The first fragment is indiciated as positive numbers and the second fragment is negative numbers.
 
+This addition operation applies to all instructions before their operations have started.
+
 ```
 tannerld: This is my cat. I love it.
 ryan: I hate my job. Someone please find me a new.
