@@ -26,6 +26,8 @@ tannerld: I have never had a sandwich as good as Joe's.
 ```
 Adapted from [Brainfuck Hello World](http://en.wikipedia.org/wiki/Brainfuck#Hello_World.21).
 
+Other examples can be found in [EXAMPLES.md](EXAMPLES.md).
+
 # Specification
 ## Variables
 Twitter users are variables. They store and hold signed integers.
