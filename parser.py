@@ -120,6 +120,9 @@ class Parser:
 		lines = code.splitlines()
 
 		for line in lines:
+			if len(line) == 0:
+				continue
+
 			self.instructions.append(Instruction(line))
 
 		self.hashtags = {}
