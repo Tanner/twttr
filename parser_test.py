@@ -59,6 +59,26 @@ class TestInstruction(unittest.TestCase):
 		self.assertEqual(Instruction("tannerld: Is this right... No.").value(), 2)
 		self.assertEqual(Instruction("tannerld: I'm not sure. This is mine.").value(), 0)
 
+		# Test various at-replies
+		self.assertEqual(Instruction("tannerld: @ryan I love cats. Maybe.").value(), 2)
+		self.assertEqual(Instruction("tannerld: @ryan I love cats.").value(), 3)
+		self.assertEqual(Instruction("tannerld: @ryan I'm not sure. This is mine.").value(), 0)
+
+		# Test various mentions
+		self.assertEqual(Instruction("tannerld: I love @ryan's cats. Maybe.").value(), 3)
+
+		self.assertEqual(Instruction("tannerld: I love cats. @ryan").value(), 3)
+		self.assertEqual(Instruction("tannerld: I'm not sure. This is mine. @ryan").value(), 0)
+
+		# Test various hashtags
+		self.assertEqual(Instruction("tannerld: I love cats. Maybe. #kitty").value(), 2)
+		self.assertEqual(Instruction("tannerld: I love cats. #kitty").value(), 3)
+		self.assertEqual(Instruction("tannerld: I'm not sure. This is mine. #kitty").value(), 0)
+
+		self.assertEqual(Instruction("tannerld: I love #cats. Maybe.").value(), 2)
+		self.assertEqual(Instruction("tannerld: I #love cats.").value(), 3)
+		self.assertEqual(Instruction("tannerld: I'm not sure. #This is mine.").value(), 0)
+
 	def test_input(self):
 		self.assertTrue(Instruction("tannerld: Is this life?").is_input())
 		self.assertFalse(Instruction("tannerld: Is this life? No.").is_input())
@@ -113,15 +133,15 @@ bob: I hate all of you. Again I hate all of you!"""
 		self.assertEqual(parser.variables['bob'], -1)
 
 	def test_at_reply(self):
-		code = """tannerld: I am the one.
+		code = """tannerld: @ryan Be the one.
 ryan: I am not the one.
-tannerld: @ryan Are you sure?"""
+tannerld: I am the one."""
 
 		parser = Parser(code)
 
 		parser.run()
 
-		self.assertEqual(parser.variables['tannerld'], 8)
+		self.assertEqual(parser.variables['tannerld'], 12)
 		self.assertEqual(parser.variables['ryan'], 5)
 
 	def test_retweet(self):
@@ -138,9 +158,9 @@ ryan: Not sure if I'm ready for this."""
 		self.assertEqual(parser.variables['ryan'], 11)
 
 	def test_mentions(self):
-		code = """tannerld: This is not cool.
+		code = """tannerld: I'm not sure I like @ryan's car.
 ryan: I love driving in cars.
-tannerld: I'm not sure I like @ryan's car."""
+tannerld: This is not cool."""
 
 		parser = Parser(code)
 

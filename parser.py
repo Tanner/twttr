@@ -31,7 +31,9 @@ class Instruction:
 		"""Read the value of the status.
 
 		The value is determined by the number of words in the first 2 sentences."""
-		fragments = re.findall(r"([A-Za-z '-]+)[\.,!;\?:-] ?", self.status)
+		status = re.sub(r"^@[A-Za-z0-9]+ ", "", self.status)
+
+		fragments = re.findall(r"([A-Za-z '\-#@]+)[\.,!;\?:-] ?", status)
 
 		if len(fragments) == 1:
 			return self.__count_words(fragments[0])
