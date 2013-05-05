@@ -181,13 +181,11 @@ class Parser:
 					self.variables[instruction.author] += ord(input[0])
 			elif instruction.is_output():
 				if self.variables[instruction.author] in range(256):
-					if debug:
-						self.output.write("%s\n" % chr(self.variables[instruction.author]))
-					else:
-						self.output.write("%s" % chr(self.variables[instruction.author]))
+					self.output.write("%s" % chr(self.variables[instruction.author]))
 
 			if debug:
-				self.output.write("PC = " + str(pc) + " " + str(self.variables) + "\n")
+				print("PC = {} {}".format(pc, self.variables))
+
 			self.variables_history[pc] = {}
 			for variable in self.variables:
 				self.variables_history[pc][variable] = self.variables[variable]
