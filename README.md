@@ -148,3 +148,6 @@ Results in:
 tannerld = 6
 ryan = 11
 ```
+
+# License
+See [LICENSE.md](LICENSE.md) for license information.
